@@ -1,0 +1,148 @@
+
+<HTML><HEAD><title>POMMCheat - Player Online Map for Mangos Cheater ^_^</title>
+<link rel="stylesheet" href="pomm_zone.css" type="text/css">
+</HEAD>
+<script language="javascript" TYPE="text/javascript">
+var req;
+var time = 15;
+var X_OFFSET = 15;
+var Y_OFFSET = -10;
+
+function tip (style, header, text) {
+  var t;
+  t = document.getElementById("tip");
+  if (window.opera) {
+	x = (window.event.clientX + X_OFFSET);
+	y = (window.event.clientY + Y_OFFSET);
+  } else if (navigator.appName == "Netscape") {
+	document.onmousemove = function (e) {
+	  x = (e.pageX + X_OFFSET);
+	  y = (e.pageY + Y_OFFSET);
+	  return true;
+	}
+  } else {
+	x = (window.event.clientX + document.documentElement.scrollLeft + document.body.scrollLeft + X_OFFSET);
+	y = (window.event.clientY + document.documentElement.scrollTop + document.body.scrollTop + Y_OFFSET);
+  }
+  
+  var tip = '<table width="80" border="0" cellspacing="0" cellpadding="0"><tr class="tip_';
+  tip += style + '_header"><td>' + header + '</td></tr><tr class="tip_text"><td>';
+  tip += text + '</td></tr></table>';
+  t.innerHTML = tip;
+  if ((screen.width - x) < 150) {
+	x -= 150;
+  }
+  t.style.left = (x + "px");
+  t.style.top = (y + "px");
+}
+
+function h_tip() {
+  var t = document.getElementById("tip");
+  t.innerHTML = "";
+  t.style.left = "-1000px";
+  t.style.top = "-1000px";
+}
+
+function load_data() {
+  var xmlHttp;
+  try {
+	// Firefox, Opera 8.0+, Safari
+	xmlHttp = new XMLHttpRequest();
+  }
+  catch (e) {
+	// Internet Explorer
+	try {
+	  xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+	} catch (e) {
+	  try {
+		xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  } catch (e) {
+		alert("Your browser does not support AJAX!");
+		return false;
+	  }
+	}
+  }
+  xmlHttp.onreadystatechange = function() {
+    if(xmlHttp.readyState === 4) {
+      var re = new RegExp("##(.+)##");
+      htmlResponse = xmlHttp.responseText;
+      mapAreaText = htmlResponse.substring(0,50);
+	  //alert(mapAreaText);
+      var m = re.exec(mapAreaText);
+      if (m != null) {
+      	var mapImage = m[1];
+      	var mapHTML = '<img src=\'img/' + mapImage + '.jpg\'/>';
+      }
+      if (document.getElementById('zone').innerHTML != mapHTML) {
+      	document.getElementById('zone').innerHTML = mapHTML;
+      }
+      pointsHTML = htmlResponse.substring((htmlResponse.lastIndexOf('##') + 2), htmlResponse.length);
+      document.getElementById('points').innerHTML = pointsHTML;
+      h_tip();
+    }
+  }
+  addy = "pommcheat.py";//?char=" + document.getElementById("charName").value;
+  if (document.getElementById("charName").value != '') {
+	addy += "?char=" + document.getElementById("charName").value;
+	//alert(addy);
+  }
+  xmlHttp.open("GET", addy, true);
+  xmlHttp.send(null);
+}
+
+function reset() {
+  var ms = 0;
+  then = new Date();
+  then.setTime(then.getTime() - ms);
+  load_data();
+}
+
+function display() {
+  now = new Date();
+  ms = now.getTime() - then.getTime();
+  ms = (time * 1000 - ms);
+  if  (time != 0) {
+	document.getElementById("timer").innerHTML = (Math.round(ms / 1000));
+  }
+  if (ms <= 0) {
+	reset();
+  }
+  if (time != 0) {
+	setTimeout("display();", 500);
+  }
+}
+
+function start() {
+  reset();
+  display();
+  if (navigator.appName == "Netscape") {
+	document.onmousemove = function(e) {
+	  x = (e.pageX + X_OFFSET);
+	  y = (e.pageY + Y_OFFSET);
+	  return true;
+	}
+  }
+}
+</SCRIPT>
+<BODY onload="start();">
+<div id="tip"></div>
+<div ID="points"></div>
+<div ID="zone"></div>
+<div ID="info">
+<center>
+<table border="0" cellspacing="0" cellpadding="0" height="20">
+<tr>
+<td valign="top" id="timer">
+</td>
+</tr>
+</table>
+<table border="0" cellspacing="0" cellpadding="0" height="470" width="1">
+<tr><td></td></tr></table>
+<table border="0" cellspacing="0" cellpadding="0" height="35" width="100%">
+<tr><td align="center" valign="top" id="server_info"></td></tr></table>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<input type="hidden" id="charName"/>
+<input type="button" onclick="document.getElementById('charName').value=''; reset();" value="Back to World Map"/>
+</center>
+</div>
+</BODY></HTML>
