@@ -1,4 +1,5 @@
-#!/home/jeffstieler/opt/bin/python2.6
+#!/home/user/opt/bin/python2.6
+# CHANGE THE ABOVE LINE TO THE LOCATION OF YOUR PYTHON EXECUTABLE!
 
 class Point:
 	"""A simple x,y point that allows Point - Point subtraction"""
@@ -16,8 +17,6 @@ class Point:
 
 import urllib, re, os, cgi, cgitb, json, sqlite3
 
-cgitb.enable()
-#mapURL = "http://www.dgserv-wow.com/World.Of.DGserv/admin02/map_fun/pomm_run.php"
 mapURL = "http://howow.linebr.com/pomm/pomm_run.php"
 bracketRegex = "(\[.*\])"
 MAP_WIDTH = 784.00
