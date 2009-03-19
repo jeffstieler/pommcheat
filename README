@@ -1,0 +1,10 @@
+Prerequisites:
+Python 2.6 or higher (for using json module)
+
+If you wish to use POMMCheat you will need to do the following:
+
+1) Determine the source of the map data for your target server.  If the URL of the map is pomm.php, the player data is most likely coming from pomm_run.php or pomm_play.php.  (Please note that the _play suffix typically denotes a newer version of the Player Online Map for MaNGOS, with which POMMCheat has *not* been tested.)
+
+2) Edit the pommcheat.py source so that the mapURL variable reflects the player data source URL found in step 1
+
+3) Run the create_db.py to create the sqlite database which stores the map coordinate offsets.
