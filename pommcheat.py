@@ -18,6 +18,11 @@ class Point:
 import urllib, re, os, cgi, cgitb, json, sqlite3
 
 mapURL = "http://howow.linebr.com/pomm/pomm_run.php"
+# http://www.conquestofthehorde.com/components/pomm/pomm.php
+# http://www.eyes-of-eternity.exano.net/components/pomm/pomm.php?rid=1
+# http://wemilktaurens.site88.net/components/pomm/pomm.php
+# http://litvivan.game-server.cc/wow/components/pomm/pomm.php
+# http://213.141.140.82/wow/components/pomm/pomm.php
 bracketRegex = "(\[.*\])"
 MAP_WIDTH = 784.00
 MAP_HEIGHT = 525.00
